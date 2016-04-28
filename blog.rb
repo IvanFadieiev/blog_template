@@ -1,15 +1,7 @@
-def current_directory
-  File.expand_path(File.dirname(__FILE__))
-end
-
 def source_paths
-  Array(super) + [current_directory]
+  Array(super) +
+    [File.expand_path(File.dirname(__FILE__))]
 end
-
-# def source_paths
-#   Array(super) +
-#     [File.expand_path(File.dirname(__FILE__))]
-# end
 
 # Gemfile
 remove_file "Gemfile"
