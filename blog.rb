@@ -1,16 +1,5 @@
 def current_directory
-  @current_directory ||=
-    if __FILE__ =~ %r{\Ahttps?://}
-      git :clone => [
-        "--quiet",
-        "https://github.com/IvanFadieiev/blog_template.git",
-        tempdir
-      ].map(&:shellescape).join(" ")
-
-      tempdir
-    else
-      File.expand_path(File.dirname(__FILE__))
-    end
+  File.expand_path(File.dirname(__FILE__))
 end
 
 def source_paths
