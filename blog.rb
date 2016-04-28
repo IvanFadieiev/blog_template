@@ -1,7 +1,28 @@
-def source_paths
-  Array(super) +
-    [File.expand_path(File.dirname(__FILE__))]
+def current_directory
+  @current_directory ||=
+    if __FILE__ =~ %r{\Ahttps?://}
+      tempdir = Dir.mktmpdir("blog_template-")
+      at_exit { FileUtils.remove_entry(tempdir) }
+      git :clone => [
+        "--quiet",
+        "https://github.com/IvanFadieiev/blog_template.git",
+        tempdir
+      ].map(&:shellescape).join(" ")
+
+      tempdir
+    else
+      File.expand_path(File.dirname(__FILE__))
+    end
 end
+
+def source_paths
+  Array(super) + [current_directory]
+end
+
+# def source_paths
+#   Array(super) +
+#     [File.expand_path(File.dirname(__FILE__))]
+# end
 
 # Gemfile
 remove_file "Gemfile"
