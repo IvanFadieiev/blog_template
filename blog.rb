@@ -1,8 +1,6 @@
 def current_directory
   @current_directory ||=
     if __FILE__ =~ %r{\Ahttps?://}
-      tempdir = Dir.mktmpdir("blog_template-")
-      at_exit { FileUtils.remove_entry(tempdir) }
       git :clone => [
         "--quiet",
         "https://github.com/IvanFadieiev/blog_template.git",
